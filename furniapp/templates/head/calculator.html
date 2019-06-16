@@ -1,0 +1,104 @@
+{% extends "header.html" %}
+
+{% block content %}
+ <script>
+     let price = 0;
+     function calculator(){
+      //let Wastage = (5/100);
+      const lengthOfRoom = document.getElementById('lr').value;
+      const breadthOfRoom = document.getElementById('br').value;
+
+      let totalRoomArea = lengthOfRoom*breadthOfRoom;
+      let perimeterOfRoom = 2*lengthOfRoom + 2*breadthOfRoom;
+
+      const skirtingTileHeight = document.getElementById('sh').value;
+      const skirtingTileArea = perimeterOfRoom*skirtingTileHeight
+      
+      const totalAreaLaid = totalRoomArea + skirtingTileArea;
+
+
+      let areaOfTile = getTileArea();
+
+      const result1 = (totalAreaLaid/areaOfTile)*Wastage
+      const result = (totalAreaLaid/areaOfTile) + result1;
+      const tileCost =  price;
+
+      document.getElementById('result').innerHTML ='Approximately ' + result.toFixed(0) + ' number of tiles required' + 'and Cost of tiles are ₹' + result.toFixed(0)*tileCost;
+      let element = document.getElementById('result');
+      element.classList.add('alert');
+      element.classList.add('alert-success');
+     }
+
+     function getTileArea(){
+        let tile = document.getElementById('tile').value;
+        let areaTile =0;
+        let element = document.getElementById('price');
+        element.classList.add('alert');
+        element.classList.add('alert-warning');
+        if(tile === "tile1"){
+            areaTile = 1;
+            price = 20
+            document.getElementById('price').innerHTML =  "Rate of per tile is " + price;
+        }
+        if(tile === "tile2"){
+            areaTile = 4;
+            price = 40
+            document.getElementById('price').innerHTML =  "Rate of per tile is " + price;
+        }
+        if(tile === "tile3"){
+            areaTile = 9;
+            price = 60
+            document.getElementById('price').innerHTML =  "Rate of per tile is " + price;
+
+        }
+        if(tile === "tile4"){
+            areaTile = 16;
+            price = 80
+            document.getElementById('price').innerHTML =  "Rate of per tile is " + price;
+        }
+        return areaTile;
+     }
+    </script>
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <h1>Tile Calculator</h1>
+            <div class="form-group">
+                <label for="name">Room Length( mtrs )</label>
+                <input type="text" id="lr" name="lr" class="form-control" placeholder="length of room" required>
+            </div>
+             <div class="form-group">
+                <label for="name">Room Breadth (mtrs )</label>
+                <input type="text" id="br" name="length" class="form-control" placeholder="breadth of room" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Skirt Height  (mtrs )</label>
+                <input type="text" id="sh" name="length" class="form-control" placeholder="Height of skirting Tile" required>
+            </div>
+             <div class="form-group">
+                <label for="tile">Select Tile:</label>
+                <select onchange="getTileArea()" class="form-control" id="tile">
+                    <option value="tile1">Tile 1 (1x1)</option>
+                    <option value="tile2">Tile 2 (2x2)</option>
+                    <option value="tile3">Tile 3 (3x3)</option>
+                    <option value="tile4">Tile 4 (4x4)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <div id="price"></div>
+            </div>
+            <div class="form-group">
+                <label for="name">Each Tile Cost  (mtrs ) </label>
+                <input type="text" id="tc" name="length" class="form-control" placeholder="cost of per tile" required>
+            </div> 
+           
+            <button class="btn btn-primary" onclick="calculator()" type="submit">Calculate</button>
+            <br><br>
+            <div class="container">
+                <div id="result"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
